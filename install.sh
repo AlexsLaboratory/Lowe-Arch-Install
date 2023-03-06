@@ -4,7 +4,7 @@
 pacman -S --noconfirm expect
 
 
-fdiskSearch=$(fdisk -l | grep -E --color=never -oi '\/dev\/(mapper\/[a-z0-9\-]+|[a-z0-9]+)')
+fdiskSearch=$(fdisk -l | grep -E --color=never -oi '/dev/(mapper/[a-z0-9\-]+|[a-z0-9]+)')
 readarray -t fdiskSearchArray <<<"$fdiskSearch"
 
 index=1
