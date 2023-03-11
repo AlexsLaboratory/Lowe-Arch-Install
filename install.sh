@@ -17,20 +17,16 @@ done
 
 echo -n "Enter Something: "
 read answer
-diskPath = $fdiskSearchArray[$answer-1]
+diskPath=${fdiskSearchArray[answer-1]}
 
-sed -i -r "s|DISK_PATH|${diskPath}|" create-partition.exp.template > create-partition.exp
+sed -r "s|DISK_PATH|${diskPath}|" create-partition.exp.template > create-partition.exp
 chmod +x create-partition.exp
 ./create-partition.exp
 
 # Format Partitions
-listAllDisksTemplate="fdisk -l DISK_PATH | grep -o 'DISK_PATH[0-9]'"
+listAllDisksTemplate="fdisk -l DISK_PATH | grep -E -o 'DISK_PATH[0-9]'"
 listAllDisksCMD=$(echo "$listAllDisksTemplate" | sed "s|DISK_PATH|$diskPath|g")
+readarray -t listAllDisksArray <<< $(eval "$listAllDisksCMD")
+echo "These partitions were created: ${listAllDisksArray[@]}"
 
-index = 1
-for disk in "$(listAllDisksCMD)"
-do
-	echo "Disk: $disk, Index: $index"
-	let "index+=1"
-done
 rm create-partition.exp
