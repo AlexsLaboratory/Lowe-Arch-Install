@@ -43,7 +43,7 @@ if {$force_conservative} {
 
 
 set timeout -1
-spawn gdisk DISK_PATH
+spawn gdisk $DISK_PATH
 match_max 100000
 expect "Command (? for help): "
 send -- "o\r"
